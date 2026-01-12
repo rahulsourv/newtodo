@@ -15,7 +15,10 @@ if (!MONGO_URI) {
   process.exit(1);
 }
 
-// CORS setup
+// ===========================
+// CORS SETUP
+// ===========================
+
 const allowedOrigins = (process.env.CLIENT_ORIGINS || '')
   .split(',')
   .map((origin) => origin.trim())
@@ -30,9 +33,9 @@ app.use(
 
 app.use(express.json());
 
-/* ===========================
-   MongoDB Models
-=========================== */
+// ===========================
+// MongoDB Models
+// ===========================
 
 // Quote model
 const quoteSchema = new mongoose.Schema(
@@ -54,9 +57,9 @@ const todoSchema = new mongoose.Schema(
 );
 const Todo = mongoose.model('Todo', todoSchema);
 
-/* ===========================
-   API Routes
-=========================== */
+// ===========================
+// API Routes
+// ===========================
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -169,19 +172,19 @@ app.delete('/api/todos/:id', async (req, res) => {
   }
 });
 
-/* ===========================
-   Serve Frontend (Vite Build)
-=========================== */
+// ===========================
+// Serve Frontend (Vite Build)
+// ===========================
 
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "../dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "../dist", "index.html"));
 });
 
-/* ===========================
-   Start Server
-=========================== */
+// ===========================
+// Start Server
+// ===========================
 
 async function start() {
   try {
